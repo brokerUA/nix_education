@@ -1,0 +1,17 @@
+{
+    "name": "brokerua/nix_education",
+    "description": "Education project from education.nixsolutions.com",
+    "type": "project",
+    "require-dev": {
+        "squizlabs/php_codesniffer": "3.*"
+    },
+    "authors": [
+        {
+            "name": "Dima Andreev",
+            "email": "8497915@gmail.com"
+        }
+    ],
+    "scripts": {
+        "phpcs": ".\\vendor\\bin\\phpcs --standard=PSR12"
+    }
+}
