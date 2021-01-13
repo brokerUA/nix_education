@@ -13,28 +13,27 @@
 <main>
     <h1>Posts</h1>
 
-    <ul>
+    <?php require_once "../posts-data.php" ?>
+
+    <?php if (isset($postsData) && is_array($postsData)) :?>
+        <ul>
+
+        <?php foreach ($postsData as $post) : ?>
         <li>
-            <a href="#">Post title 1</a><br>
-            <p>Post description post description post description ...</p>
+            <a href="<?=$post['link']?>"><?=$post['title']?></a><br>
+            <p><?=$post['description']?></p>
         </li>
-        <li>
-            <a href="#">Post title 2</a><br>
-            <p>Post description post description post description ...</p>
-        </li>
-        <li>
-            <a href="#">Post title 3</a><br>
-            <p>Post description post description post description ...</p>
-        </li>
-        <li>
-            <a href="#">Post title 4</a><br>
-            <p>Post description post description post description ...</p>
-        </li>
-        <li>
-            <a href="#">Post title 5</a><br>
-            <p>Post description post description post description ...</p>
-        </li>
-    </ul>
+
+        <?php endforeach; ?>
+
+        </ul>
+
+    <?php else : ?>
+    <p>Posts not found.</p>
+
+    <?php endif; ?>
+
+
 </main>
 
 <?php require_once "./components/footer.php" ?>
