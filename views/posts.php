@@ -6,16 +6,9 @@
 </head>
 <body>
 
-<nav>
-    <h2>Menu</h2>
-    <ul>
-        <li><a href="index.html">index</a></li>
-        <li><a href="login.html">login</a></li>
-        <li><a href="signin.html">signin</a></li>
-        <li><a href="profile.html">profile</a></li>
-        <li><a href="posts.html">posts</a></li>
-    </ul>
-</nav>
+<?php require_once "./components/header.php" ?>
+
+<?php require_once "./components/navigation.php" ?>
 
 <main>
     <h1>Posts</h1>
@@ -43,6 +36,8 @@
         </li>
     </ul>
 </main>
+
+<?php require_once "./components/footer.php" ?>
 
 </body>
 </html>
