@@ -13,5 +13,11 @@
     ],
     "scripts": {
         "phpcs": ".\\vendor\\bin\\phpcs --standard=PSR12"
+    },
+    "autoload": {
+        "psr-4": {
+            "Core\\": "core/",
+            "App\\": "app/"
+        }
     }
 }

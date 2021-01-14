@@ -1,6 +1,6 @@
 <?php
 
-$postsData = [
+return [
     [
         "title" => "Post title 1",
         "link" => "#",

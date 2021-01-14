@@ -13,9 +13,7 @@
 <main>
     <h1>Posts</h1>
 
-    <?php require_once "../posts-data.php" ?>
-
-    <?php if (isset($postsData) && is_array($postsData)) :?>
+    <?php if (isset($posts) && is_array($posts)) : ?>
         <ul>
 
         <?php foreach ($postsData as $post) : ?>
