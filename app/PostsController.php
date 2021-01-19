@@ -4,16 +4,20 @@ namespace App;
 
 use Core\View;
 
-class PostsController
+class PostsController implements ControllerInterface
 {
-    public function index(array $request = []): string
+    public function index(): void
     {
         $post = new Post();
 
-        $view = new View('posts', [
-            'posts' => $post->getAll()
-        ]);
+        $view = new View();
 
-        return $view->execute();
+        $view->path = 'posts';
+
+        $view->data = [
+            'posts' => $post->getAll()
+        ];
+
+        $view->execute();
     }
 }

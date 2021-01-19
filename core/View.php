@@ -2,27 +2,36 @@
 
 namespace Core;
 
-class View
+final class View
 {
-    protected string $path;
+    private array $params = [];
 
-    protected array $data;
-
-    public function __construct(string $path, array $data = [])
+    public function __get(string $name)
     {
-        $this->path = $path;
-        $this->data = $data;
+        if (array_key_exists($name, $this->params)) {
+            return $this->params[$name];
+        }
+
+        return null;
     }
 
-    public function execute()
+    public function __set(string $name, $value): void
     {
-        extract($this->data);
+        $this->params[$name] = $value;
+    }
 
-        $html = file_get_contents(
-            dirname(__DIR__) . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . $this->path . '.phtml'
-        );
+    public function execute(): void
+    {
+        $data = $this->data;
+        if ($data) {
+            extract($data);
+        }
 
-        return $html;
-
+        ob_start();
+        {
+            require_once CONFIGS['viewPathDir'] . DIRECTORY_SEPARATOR . $this->path . '.phtml';
+        }
+        ob_flush();
+        ob_end_clean();
     }
 }

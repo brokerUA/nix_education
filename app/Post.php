@@ -2,12 +2,12 @@
 
 namespace App;
 
-class Post implements DB
+class Post extends ModelFile
 {
     protected string $modelName = 'posts';
 
     public function getAll()
     {
-        return require_once '..' . DIRECTORY_SEPARATOR . "{$this->modelName}-data.php";
+        return $this->queryGetAll();
     }
 }

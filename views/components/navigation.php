@@ -1,13 +1,46 @@
+<?php
+    $request = htmlentities($_SERVER['REQUEST_URI']);
+?>
 <nav>
 
     <h2>Menu</h2>
 
     <ul>
-        <li><a href="./index.php">index</a></li>
-        <li><a href="./login.php">login</a></li>
-        <li><a href="./signin.php">signin</a></li>
-        <li><a href="./profile.php">profile</a></li>
-        <li><a href="./posts.php">posts</a></li>
+        <li>
+            <?php if (preg_match("/^\/$/i", $request)) : ?>
+                <strong>index</strong>
+            <?php else : ?>
+                <a href="/">index</a>
+            <?php endif; ?>
+        </li>
+        <li>
+            <?php if (preg_match("/^\/login$/i", $request)) : ?>
+                <strong>login</strong>
+            <?php else : ?>
+                <a href="/login">login</a>
+            <?php endif; ?>
+        </li>
+        <li>
+            <?php if (preg_match("/^\/registration$/i", $request)) : ?>
+                <strong>registration</strong>
+            <?php else : ?>
+                <a href="/registration">registration</a>
+            <?php endif; ?>
+        </li>
+        <li>
+            <?php if (preg_match("/^\/profile$/i", $request)) : ?>
+                <strong>profile</strong>
+            <?php else : ?>
+                <a href="/profile">profile</a>
+            <?php endif; ?>
+        </li>
+        <li>
+            <?php if (preg_match("/^\/posts$/i", $request)) : ?>
+                <strong>posts</strong>
+            <?php else : ?>
+                <a href="/posts">posts</a>
+            <?php endif; ?>
+        </li>
     </ul>
 
 </nav>

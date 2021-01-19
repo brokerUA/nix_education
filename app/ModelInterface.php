@@ -2,7 +2,7 @@
 
 namespace App;
 
-interface DB
+interface ModelInterface
 {
     public function getAll();
 }

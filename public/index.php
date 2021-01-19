@@ -2,8 +2,6 @@
 
 require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
-$_CONFIGS = require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'configs' . DIRECTORY_SEPARATOR . 'core.php';
+require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'configs.php';
 
-$result = require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'core' . DIRECTORY_SEPARATOR . 'route.php';
-
-echo $result;
+require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'routes.php';
