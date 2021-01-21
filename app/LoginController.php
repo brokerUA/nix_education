@@ -4,7 +4,7 @@ namespace App;
 
 use Core\View;
 
-class LoginController implements ControllerInterface
+class LoginController implements Controller
 {
     public function index(): void
     {

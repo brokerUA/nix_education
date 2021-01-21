@@ -4,10 +4,11 @@ namespace App;
 
 use Core\View;
 
-class PostsController implements ControllerInterface
+class PostsController extends ControllerBase
 {
     public function index(): void
     {
+
         $post = new Post();
 
         $view = new View();

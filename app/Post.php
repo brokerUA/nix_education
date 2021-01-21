@@ -2,12 +2,16 @@
 
 namespace App;
 
-class Post extends ModelFile
+class Post extends ModelBase
 {
-    protected string $modelName = 'posts';
+    private string $tableName = 'posts';
 
     public function getAll()
     {
-        return $this->queryGetAll();
+        return $this->DB
+            ->query($this->tableName)
+            ->select('title', 'text')
+            ->where(['published', '=', '1'])
+            ->get();
     }
 }

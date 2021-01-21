@@ -4,7 +4,7 @@ namespace App;
 
 use Core\View;
 
-class IndexController implements ControllerInterface
+class IndexController implements Controller
 {
     public function index(): void
     {
