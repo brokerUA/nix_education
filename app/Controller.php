@@ -2,7 +2,7 @@
 
 namespace App;
 
-interface ControllerInterface
+interface Controller
 {
     public function index(): void;
 }

@@ -4,7 +4,7 @@ namespace App;
 
 use Core\View;
 
-class RegistrationController implements ControllerInterface
+class RegistrationController implements Controller
 {
     public function index(): void
     {

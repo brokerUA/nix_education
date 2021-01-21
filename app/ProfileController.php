@@ -4,7 +4,7 @@ namespace App;
 
 use Core\View;
 
-class ProfileController implements ControllerInterface
+class ProfileController implements Controller
 {
     public function index(): void
     {
