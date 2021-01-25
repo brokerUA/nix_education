@@ -6,9 +6,20 @@ use PDO;
 
 class Mysql implements DB
 {
-    protected ?PDO $pdo;
+    protected PDO $pdo;
 
     private array $queryParams = [];
+
+    private function prepare(string $query, ?array $params = []): \PDOStatement
+    {
+        $stmt = $this->pdo->prepare($query);
+
+        $stmt->execute($params);
+
+        $this->queryParams = [];
+
+        return $stmt;
+    }
 
     public function __construct()
     {
@@ -27,18 +38,20 @@ class Mysql implements DB
         $this->pdo = new PDO($dsn, $connectionConfigs['user'], $connectionConfigs['password'], $options);
     }
 
-    public function __destruct()
+    public function table(string $tableName): self
     {
-        $this->pdo = null;
+        $this->queryParams['table'] = $tableName;
+
+        return $this;
     }
 
-    public function select(string ...$select): self
+    public function columns(string ...$select): self
     {
         foreach ($select as $value) {
-            $this->queryParams['select'][] = $value;
+            $this->queryParams['columns'][] = $value;
         }
 
-        $this->queryParams['select'] = implode(', ', $this->queryParams['select']);
+        $this->queryParams['columns'] = implode(', ', $this->queryParams['columns']);
 
         return $this;
     }
@@ -55,36 +68,102 @@ class Mysql implements DB
         return $this;
     }
 
-    public function get(): array
+    public function order(string $sort = 'ASC'): self
     {
-        $whereVars = null;
+        $this->queryParams['order'] = " ORDER BY created_at $sort";
 
-        $rawQuery = "SELECT";
+        return $this;
+    }
 
-        if (array_key_exists('select', $this->queryParams)) {
-            $rawQuery .= ' ' . $this->queryParams['select'];
-        } else {
-            $rawQuery .= ' *';
+    public function limit(int $limit = 10, ?int $offset = null): self
+    {
+        $this->queryParams['limit'] = " LIMIT $limit";
+
+        if ($offset) {
+            $this->queryParams['limit'] .= " OFFSET $offset";
         }
 
-        $rawQuery .= " FROM {$this->queryParams['table']}";
+        return $this;
+    }
+
+    public function select(): array
+    {
+        $params = null;
+
+        $query = "SELECT";
+
+        if (array_key_exists('columns', $this->queryParams)) {
+            $query .= ' ' . $this->queryParams['columns'];
+        } else {
+            $query .= ' *';
+        }
+
+        $query .= " FROM {$this->queryParams['table']}";
 
         if (array_key_exists('where', $this->queryParams)) {
-            $rawQuery .= ' WHERE ' . $this->queryParams['where'];
-            $whereVars = $this->queryParams['whereVars'];
+            $query .= ' WHERE ' . $this->queryParams['where'];
+            $params = $this->queryParams['whereVars'];
         }
 
-        $stmt = $this->pdo->prepare($rawQuery);
+        if (array_key_exists('order', $this->queryParams)) {
+            $query .= $this->queryParams['order'];
+        }
 
-        $stmt->execute($whereVars);
+        if (array_key_exists('limit', $this->queryParams)) {
+            $query .= $this->queryParams['limit'];
+        }
+
+        $stmt = $this->prepare($query, $params);
 
         return $stmt->fetchAll();
     }
 
-    public function query(string $tableName): self
+    public function insert(array $params): int
     {
-        $this->queryParams['table'] = $tableName;
+        $query = "INSERT INTO {$this->queryParams['table']} (";
 
-        return $this;
+        $query .= implode(', ', array_keys($params));
+
+        $query .= ") VALUES (";
+
+        $values = array_map(function ($value) {
+            return ":{$value}";
+        }, array_keys($params));
+
+        $query .= implode(', ', $values);
+
+        $query .= ')';
+
+        $this->prepare($query, $params);
+
+        return $this->pdo->lastInsertId();
+    }
+
+    public function update(array $params): void
+    {
+        $query = "UPDATE {$this->queryParams['table']} SET ";
+
+        $values = [];
+
+        foreach ($params as $key => $value) {
+            if ($key != 'id') {
+                $values[] = "{$key} = :{$key}";
+            }
+        }
+
+        $query .= implode(', ', $values);
+
+        $query .= " WHERE id = :id";
+
+        $this->prepare($query, $params);
+    }
+
+    public function delete(int $id): void
+    {
+        $query = "DELETE FROM {$this->queryParams['table']}";
+
+        $query .= " WHERE id = ?";
+
+        $this->prepare($query, [$id]);
     }
 }

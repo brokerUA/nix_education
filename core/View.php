@@ -4,27 +4,21 @@ namespace Core;
 
 final class View
 {
-    private array $params = [];
+    private string $path;
 
-    public function __get(string $name)
+    private array $data;
+
+    public function __construct(string $path, array $data = [])
     {
-        if (array_key_exists($name, $this->params)) {
-            return $this->params[$name];
-        }
+        $this->path = $path;
 
-        return null;
-    }
-
-    public function __set(string $name, $value): void
-    {
-        $this->params[$name] = $value;
+        $this->data = $data;
     }
 
     public function execute(): void
     {
-        $data = $this->data;
-        if ($data) {
-            extract($data);
+        if ($this->data) {
+            extract($this->data);
         }
 
         ob_start();

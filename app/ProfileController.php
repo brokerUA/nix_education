@@ -4,13 +4,11 @@ namespace App;
 
 use Core\View;
 
-class ProfileController implements Controller
+class ProfileController extends ControllerBase
 {
     public function index(): void
     {
-        $view = new View();
-
-        $view->path = 'profile';
+        $view = new View('profile');
 
         $view->execute();
     }
