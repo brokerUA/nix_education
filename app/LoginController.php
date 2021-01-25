@@ -4,13 +4,11 @@ namespace App;
 
 use Core\View;
 
-class LoginController implements Controller
+class LoginController extends ControllerBase
 {
     public function index(): void
     {
-        $view = new View();
-
-        $view->path = 'login';
+        $view = new View('login');
 
         $view->execute();
     }

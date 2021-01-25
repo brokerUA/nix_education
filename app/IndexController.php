@@ -4,13 +4,11 @@ namespace App;
 
 use Core\View;
 
-class IndexController implements Controller
+class IndexController extends ControllerBase
 {
     public function index(): void
     {
-        $view = new View();
-
-        $view->path = 'index';
+        $view = new View('index');
 
         $view->execute();
     }
