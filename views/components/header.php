@@ -2,7 +2,7 @@
 if (isset($isAuth) && $isAuth) {
     $user = new App\User();
     $user = $user->getFirstBy('id', $_SESSION['user_id']);
-    $userName = $user ? $user->name : 'NoName';
+    $userName = $user && $user->name != '' ? $user->name : 'NoName';
 }
 ?>
 <header>

@@ -8,7 +8,8 @@ class User extends ModelBase
     {
 
         if (isset($_SESSION['user_id'])) {
-            return $this->find($_SESSION['user_id'])->toArray();
+            $currentUser = $this->getFirstBy('id', $_SESSION['user_id']);
+            return $currentUser ? $currentUser->toArray() : null;
         }
 
         return null;

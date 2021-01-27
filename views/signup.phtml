@@ -6,14 +6,14 @@
 </head>
 <body>
 
-<?php require_once "components/header.php" ?>
+<?php require_once CONFIGS['viewPathDir'] . "/components/header.php" ?>
 
-<?php require_once "components/navigation.php" ?>
+<?php require_once CONFIGS['viewPathDir'] . "/components/navigation.php" ?>
 
 <main>
     <h1>Registration</h1>
 
-    <?php require_once "components/message.php" ?>
+    <?php require_once CONFIGS['viewPathDir'] . "/components/message.php" ?>
 
     <form method="post" action="/registration" style="display: inline-block">
         <fieldset>
@@ -32,7 +32,7 @@
     </form>
 </main>
 
-<?php require_once "components/footer.php" ?>
+<?php require_once CONFIGS['viewPathDir'] . "/components/footer.php" ?>
 
 </body>
 </html>
