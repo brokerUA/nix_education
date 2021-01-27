@@ -23,7 +23,7 @@ class PostsController extends ControllerBase
          * Update last post
          *
         $post = new Post();
-        $post->find(1);
+        $post->getFirstBy('id', 1);
         $post->published = 1;
         $post->title = "Update title Y";
         $post->save();
@@ -33,7 +33,7 @@ class PostsController extends ControllerBase
          * Get the post
          *
         $post = new Post();
-        $post->find(1);
+        $post->getFirstBy('id', 1);
         var_dump($post->toArray());
         */
 
@@ -41,7 +41,7 @@ class PostsController extends ControllerBase
          * Delete the post
          *
         $post = new Post();
-        $post->find(1);
+        $post->getFirstBy('id', 1);
         $post->delete();
         */
 

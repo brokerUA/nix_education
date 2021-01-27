@@ -13,20 +13,7 @@
                 <a href="/">index</a>
             <?php endif; ?>
         </li>
-        <li>
-            <?php if (preg_match("/^\/login$/i", $request)) : ?>
-                <strong>login</strong>
-            <?php else : ?>
-                <a href="/login">login</a>
-            <?php endif; ?>
-        </li>
-        <li>
-            <?php if (preg_match("/^\/registration$/i", $request)) : ?>
-                <strong>registration</strong>
-            <?php else : ?>
-                <a href="/registration">registration</a>
-            <?php endif; ?>
-        </li>
+        <?php if (isset($isAuth) && $isAuth) : ?>
         <li>
             <?php if (preg_match("/^\/profile$/i", $request)) : ?>
                 <strong>profile</strong>
@@ -34,6 +21,7 @@
                 <a href="/profile">profile</a>
             <?php endif; ?>
         </li>
+        <?php endif; ?>
         <li>
             <?php if (preg_match("/^\/posts$/i", $request)) : ?>
                 <strong>posts</strong>

@@ -4,8 +4,6 @@ namespace App;
 
 class Post extends ModelBase
 {
-    protected string $tableName = 'posts';
-
     public function getPublished(): array
     {
         return $this->DB
