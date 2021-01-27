@@ -10,8 +10,10 @@ $route->addRule('/posts', 'PostsController@index');
 
 $route->addRule('/profile', 'ProfileController@index');
 
-$route->addRule('/login', 'LoginController@index');
+$route->addRule('/login', 'AuthController@login');
 
-$route->addRule('/registration', 'RegistrationController@index');
+$route->addRule('/registration', 'AuthController@signup');
+
+$route->addRule('/logout', 'AuthController@logout');
 
 $route->execute();

@@ -8,7 +8,7 @@ abstract class ModelBase
 {
     protected DB $DB;
 
-    protected string $tableName;
+    protected string $tableName = '';
 
     private array $params;
 
@@ -17,9 +17,14 @@ abstract class ModelBase
         $dataBaseClass = CONFIGS['DB'][CONFIGS['defaultDBConnection']]['className'];
 
         $this->DB = new $dataBaseClass();
+
+        if (!$this->tableName) {
+            $tableName = (new \ReflectionClass($this))->getShortName();
+            $this->tableName = strtolower($tableName) . 's';
+        }
     }
 
-    public function __set($name, $value)
+    public function __set($name, $value): void
     {
         $this->params[$name] = $value;
     }
@@ -47,7 +52,7 @@ abstract class ModelBase
             ->table($this->tableName)
             ->insert($this->params);
 
-        return $this->find($lastID);
+        return $this->getFirstBy('id', $lastID);
     }
 
     public function delete(): ?bool
@@ -63,16 +68,17 @@ abstract class ModelBase
         return true;
     }
 
-    public function find(int $id): ?self
+    public function getFirstBy(string $name, string $value): ?self
     {
         $values = $this->DB
             ->table($this->tableName)
-            ->where(['id', '=', $id])
+            ->where([$name, '=', $value])
+            ->limit(1)
             ->select();
 
         $count = count($values);
 
-        if ($count == 0 && $count > 1) {
+        if ($count == 0 || $count > 1) {
             return null;
         }
 
@@ -83,7 +89,7 @@ abstract class ModelBase
         return $this;
     }
 
-    public function toArray()
+    public function toArray(): array
     {
         return $this->params;
     }
