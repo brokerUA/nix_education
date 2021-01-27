@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Index</title>
+    <title>Profile</title>
 </head>
 <body>
 
@@ -11,11 +11,20 @@
 <?php require_once CONFIGS['viewPathDir'] . "/components/navigation.php" ?>
 
 <main>
-    <h1>Index</h1>
+    <h1>
+        Profile
+        <small>[<a href="/profile/edit">edit</a>]</small>
+    </h1>
 
     <?php require_once CONFIGS['viewPathDir'] . "/components/message.php" ?>
 
-    <p>Hi! This is my home work in <a href="https://education.nixsolutions.com/">online NIX education</a>.</p>
+    <h2><?=$currentUser['name']?></h2>
+    <p><?=$currentUser['description']?></p>
+
+    <?php if (isset($photo)) : ?>
+        <img src="<?=$photo?>" alt="<?=$currentUser['name']?>" width="300px"><br><br>
+    <?php endif; ?>
+
 </main>
 
 <?php require_once CONFIGS['viewPathDir'] . "/components/footer.php" ?>

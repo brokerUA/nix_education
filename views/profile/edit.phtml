@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+</head>
+<body>
+
+<?php require_once CONFIGS['viewPathDir'] . "/components/header.php" ?>
+
+<?php require_once CONFIGS['viewPathDir'] . "/components/navigation.php" ?>
+
+<main>
+    <h1>Edit profile</h1>
+
+    <?php require_once CONFIGS['viewPathDir'] . "/components/message.php" ?>
+
+    <form method="post" action="/profile" enctype="multipart/form-data">
+
+        <input type="hidden" name="MAX_FILE_SIZE" value="200000" />
+
+        <?php if (isset($photo)) : ?>
+        <img src="<?=$photo?>" alt="<?=$currentUser['name']?>" width="300px"><br><br>
+        <?php endif; ?>
+
+        <label for="photo" style="font-weight: bolder">Upload new photo:</label><br>
+        <input id="photo" type="file" name="photo" accept="image/jpg,image/jpeg,image/png">
+        <br><br>
+
+        <label for="name" style="font-weight: bolder">Name:</label><br>
+        <input name="name" value="<?=$currentUser['name']?>" required>
+        <br><br>
+
+        <label for="description" style="font-weight: bolder">Description:</label><br>
+        <textarea id="description" name="description" maxlength="200" cols="40" rows="5"><?=$currentUser['description']?></textarea>
+        <br><br>
+
+        <input type="submit" value="Save">
+    </form>
+
+</main>
+
+<?php require_once CONFIGS['viewPathDir'] . "/components/footer.php" ?>
+
+</body>
+</html>

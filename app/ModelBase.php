@@ -91,6 +91,8 @@ abstract class ModelBase
 
     public function toArray(): array
     {
-        return $this->params;
+        return array_map(function ($param) {
+            return htmlspecialchars($param);
+        }, $this->params);
     }
 }
